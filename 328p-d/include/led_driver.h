@@ -45,7 +45,19 @@
 #define RESET   PORTC6 
 #define LED_BUILTIN PORTB5
 
-void led_setup();
-void led_toggle();
+#define PORT_B 'B'
+#define PORT_C 'C'
+#define PORT_D 'D'
+
+#define SET_PIN_STATE(port, pin, state) do { \
+    if (state) { \
+        port |= (1 << pin); \
+    } else { \
+        port &= ~(1 << pin); \
+    } \
+} while(0)
+
+void led_setup(uint8_t port, uint8_t pin);
+void led_toggle(uint8_t port, uint8_t pin, uint8_t state);
 
 #endif
