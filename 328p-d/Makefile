@@ -19,6 +19,9 @@ LIBRARY = 328p-d.a
 LED_SRC = src/led_driver.c
 LED_OBJ = $(LED_SRC:.c=.o)
 
+USART_SRC = src/usart_driver.c
+USART_OBJ = $(USART_SRC:.c=.o)
+
 # File to keep track of library objects
 LIB_OBJS_FILE = lib_objs.txt
 
@@ -28,13 +31,17 @@ MAIN_OBJ = $(MAIN_SRC:.c=.o)
 HEX_FILE = main.hex
 
 # Rule to build the object
-%.o: %.c
-	$(CC) $(CFLAGS) -c $< -o $@
+#%.o: %.c
+#	$(CC) $(CFLAGS) -c $< -o $@
 
 # Rule to add LED to LIB_OBJS
 led: $(LED_OBJ)
 	echo $(LED_OBJ) >> $(LIB_OBJS_FILE)
 	@echo "LED driver added to the library!"
+
+usart: $(USART_OBJ)
+	echo $(USART_OBJ) >> $(LIB_OBJS_FILE)
+	@echo "USART driver added to the library!"
 
 # Rule to create the static library from the objects
 lib: $(LIB_OBJS_FILE)
@@ -43,7 +50,7 @@ lib: $(LIB_OBJS_FILE)
 	@echo "Library created: $(LIBRARY)"
 
 # All rule for ease of use
-all: led
+all: led usart
 	@echo "All drivers added to the library!"
 
 # Rule to build the main app and link it with the library
@@ -65,4 +72,4 @@ clean:
 	rm -f $(LIBRARY) $(MAIN_OBJ) $(HEX_FILE) temp.elf $(LED_OBJ) $(LIB_OBJS_FILE)
 
 # Phony targets
-.PHONY: all run flash lib clean led
+.PHONY: all run flash lib clean led usart
