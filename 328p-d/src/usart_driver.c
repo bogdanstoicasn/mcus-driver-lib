@@ -15,6 +15,9 @@ void usart_init(uint8_t parity, uint8_t stop)
 	/* Check if it's async mode */
 	UCSR0C &= ~(1 << UMSEL00) & ~(1 << UMSEL01);
 
+	 /* Disable double speed */
+	UCSR0A &= ~(1 << U2X0);
+
 	/* Check for parity
 	 * 2 = even parity
 	 * 3 = odd parity
@@ -51,4 +54,23 @@ uint8_t usart_transmite_byte(uint8_t ch)
 	UDR0 = ch;
 
 	return STATUS_SUCCESS;
+}
+
+/* Use for critical operations
+ * For everyday project is obsolete
+ * */
+void usart_disable(void)
+{
+	/* Disable the transm and recv */
+	UCSR0B &= ~((1 << TXEN0) | (1 << RXEN0));
+
+	/* Clear flags*/
+	UCSR0A = 0;
+
+	/* Reset baud rate */
+	UBRR0L = 0;
+	UBRR0H = 0;
+
+	/* Clear other stuff */
+	UCSR0C = 0;
 }

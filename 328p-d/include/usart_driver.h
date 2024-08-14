@@ -32,5 +32,12 @@ uint8_t usart_receive_byte(void);
  */
 uint8_t usart_transmite_byte(uint8_t ch);
 
+/* Usart disable 
+ *
+ * Usage: just for critical op. 
+ * */
+void usart_disable(void);
+
+
 #endif
 
