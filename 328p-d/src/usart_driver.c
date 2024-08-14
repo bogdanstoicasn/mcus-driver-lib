@@ -1,5 +1,6 @@
 #include "../include/usart_driver.h"
 
+
 void usart_init(uint8_t parity, uint8_t stop)
 {
 	/* Load lower and upper bits of the baud rate */
