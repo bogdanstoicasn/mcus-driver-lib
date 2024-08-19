@@ -26,4 +26,6 @@ typedef enum {
 	twi_freq_400k
 } twi_freq_mode;
 
+uint8_t twi_master_tx(uint8_t addr);
+
 #endif
