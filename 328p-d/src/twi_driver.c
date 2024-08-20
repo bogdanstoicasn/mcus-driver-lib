@@ -32,6 +32,7 @@ static uint8_t twi_write_slaveaddr(uint8_t addr)
 
 	TWCR = (1 << TWINT) | (1 << TWEN);
 
+	/* Wait for the TWINT flag to set */
 	while (!(TWCR & (1 << TWINT)));
 
 	/*
@@ -44,14 +45,18 @@ static uint8_t twi_write_slaveaddr(uint8_t addr)
 	return STATUS_SUCCESS;
 }
 
-static uint8_t  twi_write(uint8_t data)
+static uint8_t  twi_write_data(uint8_t data)
 {
 	TWDR = data;
 
 	TWCR = (1 << TWINT) | (1 << TWEN);
 
+	/* Wait for the TWINT flag to set */
 	while (!(TWCR & (1 << TWINT)));
 
+	/*
+	 * 0x28 = data byte transmitted, ack received
+	 */
 	if (TWI_STATUS != 0x28)
 		return TWI_STATUS;
 
@@ -63,15 +68,23 @@ static uint8_t twi_read(uint8_t ack)
 	if (ack) {
 		TWCR = (1 << TWINT) | (1 << TWEN) | (1 << TWEA);
 
+		/* Wait for the TWINT flag to set */
 		while (!(TWCR & (1 << TWINT)));
 
+		/*
+		 * 0x50 = data byte has been received, ack returned
+		 */
 		if (TWI_STATUS != 0x50)
 			return TWI_STATUS;
 	} else {
 		TWCR = (1 << TWINT) | (1 << TWEN);
 
+     	/* Wait for the TWINT flag to set */
 		while (!(TWCR & (1 << TWINT)));
 
+		/*
+		 * 0x58 = data byte received, NOT ACK returned
+		 */
 		if (TWI_STATUS != 0x58)
 			return TWI_STATUS;
 	}
@@ -81,10 +94,11 @@ static uint8_t twi_read(uint8_t ack)
 	return data;
 }
 
-static uint8_t twi_init(twi_freq_mode freq, uint8_t pullup)
+uint8_t twi_init(twi_freq_mode freq, uint8_t pullup)
 {
 	DDRC |= (1 << TWI_SCL_PIN) | (1 << TWI_SDA_PIN);
 
+	/* Enable pullup resistor */
 	if (pullup)
 		PORTC |= (1 << TWI_SCL_PIN) | (1 << TWI_SDA_PIN);
 	else
@@ -111,4 +125,53 @@ static uint8_t twi_init(twi_freq_mode freq, uint8_t pullup)
 
 	return STATUS_SUCCESS;
 }
+uint8_t twi_master_tx(uint8_t *data, uint8_t size, uint8_t addr, uint8_t repeat_req)
+{
+	uint8_t err;
 
+	err = twi_start();
+
+	if (err)
+		return err;
+
+	err = twi_write_slaveaddr(TWI_SLA_W(addr));
+
+	if (err)
+		return err;
+
+	for (uint8_t i = 0; i < size; i++) {
+		err = twi_write_data(data[i]);
+
+		if (err)
+			return err;
+	}
+
+	if (!repeat_req)
+		twi_stop();
+
+	return STATUS_SUCCESS;
+}
+
+uint8_t twi_master_rx(uint8_t *data, uint8_t size, uint8_t addr)
+{
+	uint8_t err;
+
+	err = twi_start();
+
+	if (err)
+		return err;
+
+	err = twi_write_slaveaddr(TWI_SLA_R(addr));
+	
+	if (err)
+		return err;
+
+	for (uint8_t i = 0; i < size - 1; i++)
+		data[i] = twi_read(TWI_READ_ACK); 
+
+	data[size - 1] = twi_read(TWI_READ_NACK);
+
+	twi_stop();
+
+	return STATUS_SUCCESS;
+}
