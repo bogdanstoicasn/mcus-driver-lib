@@ -3,9 +3,6 @@
 
 #include "macros328p.h"
 
-#define STATUS_SUCCESS 0
-#define STATUS_FAILURE 1
-
 #define TWI_READ        1
 #define TWI_WRITE       0
 

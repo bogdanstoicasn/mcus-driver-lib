@@ -25,6 +25,9 @@ USART_OBJ = $(USART_SRC:.c=.o)
 TWI_SRC = src/twi_driver.c
 TWI_OBJ = $(TWI_SRC:.c=.o)
 
+PWM_SRC = src/pwm_driver.c
+PWM_OBJ = $(PWM_SRC:.c=.o)
+
 # File to keep track of library objects
 LIB_OBJS_FILE = lib_objs.txt
 
@@ -50,6 +53,10 @@ twi: $(TWI_OBJ)
 	echo $(TWI_OBJ) >> $(LIB_OBJS_FILE)
 	@echo "TWI driver added to the library!"
 
+pwm: $(PWM_OBJ)
+	echo $(PWM_ONJ) >> $(LIB_OBJS_FILE)
+	@echo "PWM driver added to the library!"
+
 # Rule to create the static library from the objects
 lib: $(LIB_OBJS_FILE)
 	@echo "Creating library with objects: $(shell cat $(LIB_OBJS_FILE))"
@@ -57,7 +64,7 @@ lib: $(LIB_OBJS_FILE)
 	@echo "Library created: $(LIBRARY)"
 
 # All rule for ease of use
-all: led usart twi
+all: led usart twi pwm
 	@echo "All drivers added to the library!"
 
 # Rule to build the main app and link it with the library
@@ -76,7 +83,7 @@ flash: $(HEX_FILE)
 
 # Clean rule
 clean:
-	rm -f $(LIBRARY) $(MAIN_OBJ) $(HEX_FILE) temp.elf $(LED_OBJ) $(USART_OBJ) $(TWI_OBJ)  $(LIB_OBJS_FILE)
+	rm -f $(LIBRARY) $(MAIN_OBJ) $(HEX_FILE) temp.elf $(LED_OBJ) $(USART_OBJ) $(TWI_OBJ) $(PWM_OBJ) $(LIB_OBJS_FILE)
 
 # Phony targets
-.PHONY: all run flash lib clean led usart twi
+.PHONY: all run flash lib clean led usart twi pwm
