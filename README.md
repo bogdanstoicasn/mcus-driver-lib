@@ -20,4 +20,4 @@ TWI (I2C) interfacing, and basic control of peripherals like LEDs and LCD displa
 
 1. atmega328p
 
-2.esp12e
+2. esp12e
