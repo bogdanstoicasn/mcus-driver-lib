@@ -15,3 +15,9 @@ TWI (I2C) interfacing, and basic control of peripherals like LEDs and LCD displa
 > just atmega328p in the current stage
 
 > open to contribs
+
+### Bought MCUS
+
+1. atmega328p
+
+2.esp12e
