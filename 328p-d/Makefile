@@ -16,8 +16,8 @@ UTILS = avrdude
 # Library and Sources
 LIBRARY = 328p-d.a
 
-LED_SRC = src/led_driver.c
-LED_OBJ = $(LED_SRC:.c=.o)
+GPIO_SRC = src/gpio_driver.c
+GPIO_OBJ = $(GPIO_SRC:.c=.o)
 
 USART_SRC = src/usart_driver.c
 USART_OBJ = $(USART_SRC:.c=.o)
@@ -41,9 +41,9 @@ HEX_FILE = main.hex
 #	$(CC) $(CFLAGS) -c $< -o $@
 
 # Rule to add LED to LIB_OBJS
-led: $(LED_OBJ)
-	echo $(LED_OBJ) >> $(LIB_OBJS_FILE)
-	@echo "LED driver added to the library!"
+gpio: $(GPIO_OBJ)
+	echo $(GPIO_OBJ) >> $(LIB_OBJS_FILE)
+	@echo "GPIO driver added to the library!"
 
 usart: $(USART_OBJ)
 	echo $(USART_OBJ) >> $(LIB_OBJS_FILE)
@@ -64,7 +64,7 @@ lib: $(LIB_OBJS_FILE)
 	@echo "Library created: $(LIBRARY)"
 
 # All rule for ease of use
-all: led usart twi pwm
+all: gpio usart twi pwm
 	@echo "All drivers added to the library!"
 
 # Rule to build the main app and link it with the library
@@ -83,7 +83,7 @@ flash: $(HEX_FILE)
 
 # Clean rule
 clean:
-	rm -f $(LIBRARY) $(MAIN_OBJ) $(HEX_FILE) temp.elf $(LED_OBJ) $(USART_OBJ) $(TWI_OBJ) $(PWM_OBJ) $(LIB_OBJS_FILE)
+	rm -f $(LIBRARY) $(MAIN_OBJ) $(HEX_FILE) temp.elf $(GPIO_OBJ) $(USART_OBJ) $(TWI_OBJ) $(PWM_OBJ) $(LIB_OBJS_FILE)
 
 # Phony targets
-.PHONY: all run flash lib clean led usart twi pwm
+.PHONY: all run flash lib clean gpio usart twi pwm

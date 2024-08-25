@@ -1,5 +1,5 @@
-#ifndef LED_DRIVER_H
-#define LED_DRIVER_H
+#ifndef GPIO_DRIVER_H
+#define GPIO_DRIVER_H
 
 #include "macros328p.h"
 
@@ -57,7 +57,33 @@
     } \
 } while(0)
 
-void led_setup(uint8_t port, uint8_t pin);
-void led_toggle(uint8_t port, uint8_t pin, uint8_t state);
+/* void gpio_init(volatile uint8_t *ddr, uint8_t pin_mask, uint8_t mode) */
+
+/*
+ * Function that changes the ddr register as required:
+ *      - input
+ *      - output
+ * Usage: DDRD, PORTD1, OUT 
+ */
+void gpio_setup(volatile uint8_t *ddr, uint8_t pin, uint8_t state);
+
+/* 
+ * Function that changes the port register as required:
+ *      - input/output
+ *      - disable?enable pull-up resitor (if pin is set as an input)
+ */
+void gpio_write(volatile uint8_t *port, uint8_t pin, uint8_t state);
+
+/*
+ * Function that reads the value from the pin register
+ */
+uint8_t gpio_read(volatile uint8_t *pin_r, uint8_t pin);
+
+/*
+ * Function that toggles the port register
+ *
+ * Usage: output -> ON/OFF
+ */
+void gpio_toggle(volatile uint8_t *port, uint8_t pin);
 
 #endif

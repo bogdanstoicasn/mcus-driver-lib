@@ -21,3 +21,9 @@ TWI (I2C) interfacing, and basic control of peripherals like LEDs and LCD displa
 1. atmega328p
 
 2. esp12e
+
+3. esp32-c3
+
+### Notice
+
+> 1 week of absence due to exams, resume on 4th of September
