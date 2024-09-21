@@ -230,4 +230,58 @@
 #define OCF0A   1
 #define OCF0B   2
 
+/* Power reduction register */
+
+#define PRR     (*(volatile uint8_t *)0x64)
+#define PRADC   0
+#define PRUSART0 1
+#define PRSPI   2
+#define PRTIM1  3
+#define PRTIM0  5
+#define PRTIM2  6
+#define PRTWI   7
+
+
+/* ADC related registers */
+
+#define DIDR1   (*(volatile uint8_t *)0x7F)
+#define AIN0D   0
+#define AIN1D   1
+
+#define DIDR0   (*(volatile uint8_t *)0x7E)
+#define ADC0D   0
+#define ADC1D   1
+#define ADC2D   2
+#define ADC3D   3
+#define ADC4D   4
+#define ADC5D   5
+
+#define ADMUX   (*(volatile uint8_t *)0x7C)
+#define MUX0    0
+#define MUX1    1
+#define MUX2    2
+#define MUX3    3
+#define ADLAR   5
+#define REFS0   6
+#define REFS1   7
+
+#define ADCSRB  (*(volatile uint8_t *)0x7B)
+#define ADTS0   0
+#define ADTS1   1
+#define ADTS2   2
+#define ACME    6
+
+#define ADCSRA  (*(volatile uint8_t *)0x7A)
+#define ADPS0   0
+#define ADPS1   1
+#define ADPS2   2
+#define ADIE    3
+#define ADIF    4
+#define ADATE   5
+#define ADSC    6
+#define ADEN    7
+
+#define ADCH    (*(volatile uint8_t *)0x79)
+#define ADCL    (*(volatile uint8_t *)0x78)
+
 #endif
