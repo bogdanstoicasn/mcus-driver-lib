@@ -284,4 +284,14 @@
 #define ADCH    (*(volatile uint8_t *)0x79)
 #define ADCL    (*(volatile uint8_t *)0x78)
 
+#define ACSR    (*(volatile uint8_t *)0x50)
+#define ACIS0   0
+#define ACIS1   1
+#define ACIC    2
+#define ACIE    3
+#define ACI     4
+#define ACO     5
+#define ACBG    6
+#define ACD     7
+
 #endif
