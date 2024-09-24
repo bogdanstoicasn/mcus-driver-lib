@@ -47,6 +47,10 @@
 
 void adc_init(uint8_t pin, uint8_t prescaler, uint8_t ref_voltage);
 
+/* Function that disables the adc
+ */
+void adc_disable(void);
+
 /* Read the adc from a pin
  * Use adc_init first
  * Atmega328p can use only 1 adc pin at a time 

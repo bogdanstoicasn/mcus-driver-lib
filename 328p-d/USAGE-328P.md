@@ -10,3 +10,7 @@ Example:
     3. make all     => adds everything to the lib
 
 After each make use: **make lib** to create the ".a" file.
+
+## Lib usage
+
+Check the **.h** files for the functions name and usage.

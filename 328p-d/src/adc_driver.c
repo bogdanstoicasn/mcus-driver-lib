@@ -2,7 +2,7 @@
 
 void adc_init(uint8_t pin, uint8_t prescaler, uint8_t ref_voltage)
 {
-	/* Power on power for adc in pow red reg */
+	/* Power on ADC */
 	PRR &= ~(1 << PRADC);
 
 	/* Start the ADC */
@@ -26,6 +26,17 @@ void adc_init(uint8_t pin, uint8_t prescaler, uint8_t ref_voltage)
 		pin = 0;
 
 	ADMUX = (ADMUX & ~(1 << MUX0 | 1 << MUX1 | 1 << MUX2 | 1 << MUX3)) | (pin & 0x0F);
+}
+
+void adc_disable(void)
+{
+	/* Disable ADC in the control register 
+	 * Disclaimer: it stops the current conversion
+	 */
+	ADCSRA &= ~(1 << ADEN);
+
+	/* Shutdown the ADC from the power reduction register */
+	PRR |= (1 << PRADC);
 }
 
 uint16_t adc_read(void)
