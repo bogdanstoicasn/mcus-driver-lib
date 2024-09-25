@@ -3,8 +3,8 @@
 
 #include <stdint.h>
 
-/* General use macros */
 
+/* General use macros */
 #define IN_PULLUP 2
 #define OUT     1
 #define IN      0
@@ -57,7 +57,6 @@
 #define PIND5   5
 #define PIND6   6
 #define PIND7   7
-
 
 
 #define PORTC   (*(volatile uint8_t *)0x28)
@@ -119,6 +118,7 @@
 #define PINB6   6
 #define PINB7   7
 
+
 /* USART macros */
 #define UDR0    (*(volatile uint8_t *)0xC6)
 #define UBRR0H  (*(volatile uint8_t *)0xC5)
@@ -154,8 +154,8 @@
 #define TXC0    6
 #define RXC0    7
 
-/* Two wire interface */
 
+/* Two wire interface */
 #define TWAMR   (*(volatile uint8_t *)0xBD)
 #define TWAM0   1
 #define TWAM1   2
@@ -199,7 +199,6 @@
 
 
 /* Timer/Counter0 related registers */
-
 #define TCCR0A  (*(volatile uint8_t *)0x44)
 #define WGM00   0
 #define WGM01   1
@@ -231,7 +230,6 @@
 #define OCF0B   2
 
 /* Power reduction register */
-
 #define PRR     (*(volatile uint8_t *)0x64)
 #define PRADC   0
 #define PRUSART0 1
@@ -243,7 +241,6 @@
 
 
 /* ADC related registers */
-
 #define DIDR1   (*(volatile uint8_t *)0x7F)
 #define AIN0D   0
 #define AIN1D   1
@@ -293,5 +290,30 @@
 #define ACO     5
 #define ACBG    6
 #define ACD     7
+
+/* Store program memory registers */
+#define SPMCSR  (*(volatile uint8_t *)0x57)
+#define SELFPRGEN 0
+#define PGERS   1
+#define PGWRT   2
+#define BLBSET  3
+#define RWWSRE  4
+#define RWWSB   6
+#define SPMIE   7
+
+
+/* EEPROM related registers */
+#define EEARH   (*(volatile uint8_t *)0x42)
+#define EEARL   (*(volatile uint8_t *)0x41)
+
+#define EEDR    (*(volatile uint8_t *)0x40)
+
+#define EECR    (*(volatile uint8_t *)0x3F)
+#define EERE    0
+#define EEPE    1
+#define EEMPE   2
+#define EERIE   3
+#define EEPM0   4
+#define EEPM1   5
 
 #endif
