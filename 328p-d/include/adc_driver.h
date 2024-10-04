@@ -23,7 +23,7 @@
 /* ADC Pin to choose from.
  * Values from the atmega328p datasheet
  * Arduino Uno has ADC from 0 to 5 (use the values from 0 to 5 or GND or 1.1V)
- * */
+ */
 #define ADC0                               0
 #define ADC1                               1
 #define ADC2                               2
@@ -54,6 +54,8 @@ void adc_disable(void);
 /* Read the adc from a pin
  * Use adc_init first
  * Atmega328p can use only 1 adc pin at a time 
+ *
+ * @return the value we read
  */
 uint16_t adc_read(void);
 

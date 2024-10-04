@@ -29,9 +29,9 @@ typedef enum {
  * 	Configures the TWI peripheral to operate at the specified baud rate
  * 	and enables/disables the pullup resistor.
  *
- * 	@param freq   The freq value used for the baud rate
+ * 	@param freq   - The freq value used for the baud rate
  * 			      check the enum
- * 	@param pullup Enable internal pullup
+ * 	@param pullup - Enable internal pullup
  * 				  if u don't have external pullup always use it(set to 1)
  *
  * @return Error code
@@ -41,10 +41,10 @@ uint8_t twi_init(twi_freq_mode freq, uint8_t pullup);
 /*
  * @brief Send data up to uint8_t max size
  *
- * @param data       The data u want to send
- * @parma size       The size of data
- * @param addr       The addr of the peripheral
- * @param repeat_req Send repeat start if set to 1 (multi-master environment)
+ * @param data       - The data u want to send
+ * @parma size       - The size of data
+ * @param addr       - The addr of the peripheral
+ * @param repeat_req - Send repeat start if set to 1 (multi-master environment)
  *
  * @return Error code 
  * */
@@ -53,9 +53,9 @@ uint8_t twi_master_tx(uint8_t *data, uint8_t size, uint8_t addr, uint8_t repeat_
 /*
  * @brief Receive data up to uint8_t max size
  *
- * @param data Put the data here
- * @param size Data size
- * @param addr Slave addr
+ * @param data - Put the data here
+ * @param size - Data size
+ * @param addr - Slave addr
  *
  * @return Error code
  * */

@@ -18,16 +18,25 @@
 #define DEFAULT_STOP   1
 #define COMPLEX_STOP   2
 
+/* Function that initializes the usart
+ *
+ * @param parity - add parity bits for message correction
+ * @param stop - number of stop bits
+ */
 void usart_init(uint8_t parity, uint8_t stop);
 
 /* Receive a byte
- *
+ * 
+ * @return byte received
  * TODO: check for other flags in UCSR0A
  */
 uint8_t usart_receive_byte(void);
 
 /* Transmite byte 
+ * 
+ * @param ch - byte to be sent
  *
+ * @return SUCCESS or FAILURE
  * TODO: maybe check for errors in ch
  */
 uint8_t usart_transmite_byte(uint8_t ch);

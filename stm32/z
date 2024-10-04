@@ -23,16 +23,3 @@ void gpio_setup(gpio_def *gpiox, rcc_def *rcc)
 		rcc->apb2enr |= (1 << 2);
 
 }
-
-void gpio_config_pin(gpio_def *gpiox, uint8_t pin, gpio_mode mode) {
-    if (pin < 8) {
-        // Configure pin in CRL register (pins 0-7)
-        gpiox->crl &= ~(0xF << (pin * 4));  // Clear the 4 bits for the pin
-        gpiox->crl |= (mode << (pin * 4));  // Set mode and configuration
-    } else {
-        // Configure pin in CRH register (pins 8-15)
-        pin -= 8;
-        gpiox->crh &= ~(0xF << (pin * 4));  // Clear the 4 bits for the pin
-        gpiox->crh |= (mode << (pin * 4));  // Set mode and configuration
-    }
-}

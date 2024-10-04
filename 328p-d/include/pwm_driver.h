@@ -18,6 +18,14 @@ typedef enum {
 	MODE_PHASE_CORRECT
 } pwm_mode;
 
+/* Function that starts the timer counter 0 pwm which uses port6
+ *
+ * @param mode      - mode for pwm
+ * @param prescaler - the prescaler for pwm
+ * @param duty_cycle
+ *
+ * @return SUCCESS or FAILURE
+ * */
 uint8_t tc0_pwm_init(pwm_mode mode, pwm_prescaler prescaler, uint8_t duty_cycle);
 
 #endif

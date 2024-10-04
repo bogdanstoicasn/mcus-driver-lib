@@ -63,6 +63,10 @@
  * Function that changes the ddr register as required:
  *      - input
  *      - output
+ * @param *ddr  - the data direction register
+ * @param pin   - the port/pin we want to work with
+ * @param state - input/output
+ *
  * Usage: DDRD, PORTD1, OUT 
  */
 void gpio_setup(volatile uint8_t *ddr, uint8_t pin, uint8_t state);
@@ -70,19 +74,23 @@ void gpio_setup(volatile uint8_t *ddr, uint8_t pin, uint8_t state);
 /* 
  * Function that changes the port register as required:
  *      - input/output
- *      - disable?enable pull-up resitor (if pin is set as an input)
+ *      - disable/enable pull-up resitor (if pin is set as an input)
  */
 void gpio_write(volatile uint8_t *port, uint8_t pin, uint8_t state);
 
 /*
  * Function that reads the value from the pin register
+ * @param *pin_r - the pin register
+ * @param pin    - the pin
+ *
+ * Usage: PINB, PIN7
  */
 uint8_t gpio_read(volatile uint8_t *pin_r, uint8_t pin);
 
 /*
  * Function that toggles the port register
  *
- * Usage: output -> ON/OFF
+ * Usage: on output -> ON/OFF
  */
 void gpio_toggle(volatile uint8_t *port, uint8_t pin);
 
