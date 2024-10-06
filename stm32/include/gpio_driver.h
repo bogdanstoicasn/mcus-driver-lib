@@ -73,4 +73,19 @@ void gpio_setup(gpio_def *gpiox, rcc_def *rcc);
 */
 void gpio_config_pin(gpio_def *gpiox, uint8_t pin, gpio_mode mode);
 
+/* Function that reads from a specific pin
+ *
+ * @param *gpiox - gpio register (ex: GPIOA, GPIOB, ...)
+ * @param pin    - pin
+ *
+ * @return 1 or 0
+ */
+uint8_t gpio_read_pin(gpio_def *gpiox, uint8_t pin);
+/* Function that toggles the state of a pin
+ *
+ * @param *gpiox - gpio register (ex: GPIOA, GPIOB, ...)
+ * @param pin    - pin
+ * */
+void gpio_toggle_pin(gpio_def *gpiox, uint8_t pin);
+
 #endif

@@ -24,6 +24,7 @@ void gpio_setup(gpio_def *gpiox, rcc_def *rcc)
 
 }
 
+/* TODO: Add pull-up/down variable and functionality*/
 void gpio_config_pin(gpio_def *gpiox, uint8_t pin, gpio_mode mode) {
     if (pin < 8) {
         // Configure pin in CRL register (pins 0-7)
@@ -36,3 +37,15 @@ void gpio_config_pin(gpio_def *gpiox, uint8_t pin, gpio_mode mode) {
         gpiox->crh |= (mode << (pin * 4));  // Set mode and configuration
     }
 }
+
+uint8_t gpio_read_pin(gpio_def *gpiox, uint8_t pin)
+{
+	return (gpiox->idr & (1 << pin)) ? 1 : 0;
+}
+
+void gpio_toggle_pin(gpio_def *gpiox, uint8_t pin)
+{
+	gpiox->odr ^= (1 << pin);
+}
+
+
