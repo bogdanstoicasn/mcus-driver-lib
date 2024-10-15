@@ -1,7 +1,7 @@
 #ifndef GPIO_DRIVER_H
 #define GPIO_DRIVER_H
 
-#include "macros328p.h"
+#include "./util/atm328p_base.h"
 
 /*                      <ARDUINO UNO>
  * Here we are mapping the <Arduino Uno> pins to the atmega328p:

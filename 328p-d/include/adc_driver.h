@@ -1,7 +1,7 @@
 #ifndef ADC_DRIVER_H
 #define ADC_DRIVER_H
 
-#include "macros328p.h"
+#include "./util/atm328p_base.h"
 
 /* Use for prescaler value */
 #define PRESC_VAL                          0

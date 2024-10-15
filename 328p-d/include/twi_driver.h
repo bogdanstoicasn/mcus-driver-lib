@@ -1,7 +1,7 @@
 #ifndef TWI_DRIVER_H
 #define TWI_DRIVER_H
 
-#include "macros328p.h"
+#include "./util/atm328p_base.h"
 
 #define TWI_READ        1
 #define TWI_WRITE       0

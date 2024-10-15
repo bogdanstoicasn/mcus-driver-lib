@@ -1,7 +1,8 @@
 #ifndef EEPROM_DRIVER_H
 #define EEPROM_DRIVER_H
 
-#include "macros328p.h"
+#include "./util/atm328p_base.h"
+#include "./util/atm328p_asm.h"
 
 /* Function that writes to eeprom 
  * @param addr - the addres you want to write to

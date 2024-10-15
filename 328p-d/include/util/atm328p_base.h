@@ -1,5 +1,5 @@
-#ifndef MACROS_328P_H
-#define MACROS_328P_H
+#ifndef ATM_328P_BASE_H
+#define ATM_328P_BASE_H
 
 #include <stdint.h>
 

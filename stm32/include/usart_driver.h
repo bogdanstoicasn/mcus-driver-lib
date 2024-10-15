@@ -1,16 +1,12 @@
 #ifndef USART_DRIVER_H
-#include USART_DRIVER_H
+#define USART_DRIVER_H
 
-#include "macros32f103.h"
+#include "./util/stm32f103_def.h"
 
-typedef struct {
+void usart_init(usart_def *usartx);
 
-} usart1_def;
+void usart_transmit_byte(usart_def *usartx, uint8_t data);
 
-void usart1_init(void);
-
-void usart1_transmit_byte(uint8_t data);
-
-void usart1_receive_byte(void);
+uint8_t usart_receive_byte(usart_def *usartx);
 
 #endif

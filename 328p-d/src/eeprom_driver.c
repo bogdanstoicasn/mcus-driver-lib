@@ -1,5 +1,4 @@
 #include "../include/eeprom_driver.h"
-#include "../include/interrupt_driver.h"
 
 void eeprom_write(uint16_t addr, uint8_t data)
 {

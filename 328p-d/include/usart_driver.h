@@ -1,7 +1,7 @@
 #ifndef USART_DRIVER_H
 #define USART_DRIVER_H
 
-#include "macros328p.h"
+#include "./util/atm328p_base.h"
 
 #define BAUDRATE       9600
 #define F_CPU          16000000UL

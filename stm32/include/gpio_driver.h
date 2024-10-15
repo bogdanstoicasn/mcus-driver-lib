@@ -1,29 +1,7 @@
 #ifndef GPIO_DRIVER_H
 #define GPIO_DRIVER_H
 
-#include "macros32f103.h"
-
-typedef struct {
-	volatile uint32_t crl;
-	volatile uint32_t crh;
-	volatile uint32_t idr;
-	volatile uint32_t odr;
-	volatile uint32_t bsrr;
-	volatile uint32_t brr;
-	volatile uint32_t lckr;
-} gpio_def;
-
-typedef struct {
-	volatile uint32_t cr;
-	volatile uint32_t cfgr;
-	volatile uint32_t cir;
-	volatile uint32_t apb2rstr;
-	volatile uint32_t apb1rstr;
-	volatile uint32_t ahbenr;
-	volatile uint32_t apb2enr;
-	volatile uint32_t bdcr;
-	volatile uint32_t csr;
-} rcc_def;
+#include "./util/stm32f103_def.h"
 
 typedef enum {
     // Input Modes (MODE = 00)
@@ -45,16 +23,6 @@ typedef enum {
     GPIO_MODE_AF_OD_2MHZ            = 0xE,  /* Alternate function Open-Drain, 2 MHz */
     GPIO_MODE_AF_OD_50MHZ           = 0xF   /* Alternate function Open-Drain, 50 MHz */
 } gpio_mode;
-
-#define GPIOA ((gpio_def *) GPIOA_BASE)
-#define GPIOB ((gpio_def *) GPIOB_BASE)
-#define GPIOC ((gpio_def *) GPIOC_BASE)
-#define GPIOD ((gpio_def *) GPIOD_BASE)
-#define GPIOE ((gpio_def *) GPIOE_BASE)
-#define GPIOF ((gpio_def *) GPIOF_BASE)
-#define GPIOG ((gpio_def *) GPIOG_BASE)
-
-#define RCC   ((rcc_def *) RCC_BASE)
 
 /* Function that starts the clock for gpio
  * 

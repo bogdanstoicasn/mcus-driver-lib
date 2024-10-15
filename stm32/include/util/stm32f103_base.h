@@ -1,5 +1,5 @@
-#ifndef MACROS_32F103_H
-#define MACROS_32F103_H
+#ifndef BASE_32F103_H
+#define BASE_32F103_H
 
 #include <stdint.h>
 
