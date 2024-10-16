@@ -15,6 +15,9 @@ LIBRARY = stm32f103c8-d.a
 GPIO_SRC = src/gpio_driver.c
 GPIO_OBJ = $(GPIO_SRC:.c=.o)
 
+USART_SRC = src/usart_driver.c
+USART_OBJ = $(USART_SRC:.c=.o)
+
 #Files to keep track of lib objects
 LIB_OBJS_FILE = lib_objs.txt
 
@@ -27,6 +30,10 @@ gpio: $(GPIO_OBJ)
 	echo $(GPIO_OBJ) >> $(LIB_OBJS_FILE)
 	@echo "GPIO driver added to the library!"
 
+usart: $(USART_OBJ)
+	echo $(USART_OBJ) >> $(LIB_OBJS_FILE)
+	@echo "USART driver added to the library!"
+
 #Rule to create the lib
 lib: $(LIB_OBJS_FILE)
 	@echo "Creating library with objects: $(shell cat $(LIB_OBJS_FILE))"
@@ -34,7 +41,7 @@ lib: $(LIB_OBJS_FILE)
 	@echo "Library created: $(LIBRARY)"
 
 #Rule all
-all: gpio
+all: gpio usart
 	@echo "All drivers added to the library!"
 
 #Rule to build main and link lib
@@ -47,9 +54,9 @@ run: all $(MAIN_OBJ) $(LIBRARY)
 
 #Rule to clean
 clean:
-	rm -f $(GPIO_OBJ) $(MAIN_OBJ) $(LIBRARY) $(LIB_OBJS_FILE) main.elf
+	rm -f $(GPIO_OBJ) $(USART_OBJ) $(MAIN_OBJ) $(LIBRARY) $(LIB_OBJS_FILE) main.elf
 
 #Phony targets
-.PHONY: all run clean lib gpio
+.PHONY: all run clean lib gpio usart
 
 

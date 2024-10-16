@@ -51,5 +51,7 @@ typedef struct {
 #define RCC   ((rcc_def *) RCC_BASE)
 
 #define USART1 ((usart_def *) USART1_BASE)
+#define USART2 ((usart_def *) USART2_BASE)
+#define USART3 ((usart_def *) USART3_BASE)
 
 #endif

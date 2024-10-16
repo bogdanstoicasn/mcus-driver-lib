@@ -27,9 +27,8 @@ typedef enum {
 /* Function that starts the clock for gpio
  * 
  * @param *gpiox - gpio register (ex: GPIOA, GPIOB, ...)
- * @param *rcc - rcc register
 */
-void gpio_setup(gpio_def *gpiox, rcc_def *rcc);
+void gpio_setup(gpio_def *gpiox);
 
 /* Function that configs the pin for different modes
  * 

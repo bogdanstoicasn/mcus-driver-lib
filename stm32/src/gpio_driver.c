@@ -1,26 +1,26 @@
 #include "../include/gpio_driver.h"
 
-void gpio_setup(gpio_def *gpiox, rcc_def *rcc)
+void gpio_setup(gpio_def *gpiox)
 {
 	/* Start the clock for the gpio 
 	 * If not matching pointer, set gpioa
 	 */
 	if (gpiox == GPIOA)
-		rcc->apb2enr |= (1 << 2);
+		RCC->apb2enr |= (1 << 2);
 	else if (gpiox == GPIOB)
-		rcc->apb2enr |= (1 << 3);
+		RCC->apb2enr |= (1 << 3);
 	else if (gpiox == GPIOC)
-		rcc->apb2enr |= (1 << 4);
+		RCC->apb2enr |= (1 << 4);
 	else if (gpiox == GPIOD)
-		rcc->apb2enr |= (1 << 5);
+		RCC->apb2enr |= (1 << 5);
 	else if (gpiox == GPIOE)
-		rcc->apb2enr |= (1 << 6);
+		RCC->apb2enr |= (1 << 6);
 	else if (gpiox == GPIOF)
-		rcc->apb2enr |= (1 << 7);
+		RCC->apb2enr |= (1 << 7);
 	else if (gpiox == GPIOG)
-		rcc->apb2enr |= (1 << 8);
+		RCC->apb2enr |= (1 << 8);
 	else
-		rcc->apb2enr |= (1 << 2);
+		RCC->apb2enr |= (1 << 2);
 
 }
 
