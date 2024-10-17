@@ -18,6 +18,9 @@ GPIO_OBJ = $(GPIO_SRC:.c=.o)
 USART_SRC = src/usart_driver.c
 USART_OBJ = $(USART_SRC:.c=.o)
 
+ADC_SRC = src/adc_driver.c
+ADC_OBJ = $(ADC_SRC:.c=.o)
+
 #Files to keep track of lib objects
 LIB_OBJS_FILE = lib_objs.txt
 
@@ -34,6 +37,10 @@ usart: $(USART_OBJ)
 	echo $(USART_OBJ) >> $(LIB_OBJS_FILE)
 	@echo "USART driver added to the library!"
 
+adc: $(ADC_OBJ)
+	echo $(ADC_OBJ) >> $(LIB_OBJS_FILE)
+	@echo "ADC driver added to the library!"
+
 #Rule to create the lib
 lib: $(LIB_OBJS_FILE)
 	@echo "Creating library with objects: $(shell cat $(LIB_OBJS_FILE))"
@@ -41,7 +48,7 @@ lib: $(LIB_OBJS_FILE)
 	@echo "Library created: $(LIBRARY)"
 
 #Rule all
-all: gpio usart
+all: gpio usart adc
 	@echo "All drivers added to the library!"
 
 #Rule to build main and link lib
@@ -54,9 +61,9 @@ run: all $(MAIN_OBJ) $(LIBRARY)
 
 #Rule to clean
 clean:
-	rm -f $(GPIO_OBJ) $(USART_OBJ) $(MAIN_OBJ) $(LIBRARY) $(LIB_OBJS_FILE) main.elf
+	rm -f $(GPIO_OBJ) $(USART_OBJ) $(ADC_OBJ) $(MAIN_OBJ) $(LIBRARY) $(LIB_OBJS_FILE) main.elf
 
 #Phony targets
-.PHONY: all run clean lib gpio usart
+.PHONY: all run clean lib gpio usart adc
 
 

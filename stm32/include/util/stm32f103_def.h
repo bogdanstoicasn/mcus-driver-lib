@@ -39,6 +39,30 @@ typedef struct {
 	volatile uint32_t gtpr;
 } usart_def; 
 
+/* ADC register components*/
+typedef struct {
+	volatile uint32_t sr;
+	volatile uint32_t cr1;
+	volatile uint32_t cr2;
+	volatile uint32_t smpr1;
+	volatile uint32_t smpr2;
+	volatile uint32_t jofr1;
+	volatile uint32_t jofr2;
+	volatile uint32_t jofr3;
+	volatile uint32_t jofr4;
+	volatile uint32_t htr;
+	volatile uint32_t ltr;
+	volatile uint32_t sqr1;
+	volatile uint32_t sqr2;
+	volatile uint32_t sqr3;
+	volatile uint32_t jsqr;
+	volatile uint32_t jdr1;
+	volatile uint32_t jdr2;
+	volatile uint32_t jdr3;
+	volatile uint32_t jdr4;
+	volatile uint32_t dr;
+} adc_def;
+
 
 #define GPIOA ((gpio_def *) GPIOA_BASE)
 #define GPIOB ((gpio_def *) GPIOB_BASE)
@@ -53,5 +77,8 @@ typedef struct {
 #define USART1 ((usart_def *) USART1_BASE)
 #define USART2 ((usart_def *) USART2_BASE)
 #define USART3 ((usart_def *) USART3_BASE)
+
+#define ADC1 ((adc_def *) ADC1_BASE)
+#define ADC2 ((adc_def *) ADC2_BASE)
 
 #endif
