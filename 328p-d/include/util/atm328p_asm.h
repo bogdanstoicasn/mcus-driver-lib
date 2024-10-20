@@ -8,4 +8,6 @@
 #define DISABLE_INTERRUPTS() __asm__ __volatile__("cli" ::: "memory")
 #define RETURN_INTERRUPT() __asm__ __volatile__ ("reti"::: "memory")
 
+#define WDT_RESET() __asm__ __volatile__ ("wdr")
+
 #endif

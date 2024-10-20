@@ -316,4 +316,24 @@
 #define EEPM0   4
 #define EEPM1   5
 
+
+/* MCU status register */
+#define MCUSR   (*(volatile uint8_t *)0x54)
+#define PORF    0
+#define EXTRF   1
+#define BORF    2
+#define WDRF    3
+
+
+/* WDT control register*/
+#define WDTCSR  (*(volatile uint8_t *)0x60)
+#define WDP0    0
+#define WDP1    1
+#define WDP2    2
+#define WDE     3
+#define WDCE    4
+#define WDP3    5
+#define WDIE    6
+#define WDIF    7
+
 #endif
