@@ -198,6 +198,27 @@
 #define TWBR    (*(volatile uint8_t *)0xB8)
 
 
+/* SPI related registers */
+#define SPCR    (*(volatile uint8_t *)0x4C)
+#define SPR0    0
+#define SPR1    1
+#define CPHA    2
+#define CPOL    3
+#define MSTR    4
+#define DORD    5
+#define SPE     6
+#define SPIE    7
+
+#define SPSR    (*(volatile uint8_t *)0x4D)
+#define SPI2X   0
+#define WCOL    6
+#define SPIF    7
+
+#define SPDR    (*(volatile uint8_t *)0x4E)
+#define LSB     0
+#define MSB     7
+
+
 /* Timer/Counter0 related registers */
 #define TCCR0A  (*(volatile uint8_t *)0x44)
 #define WGM00   0
@@ -228,6 +249,54 @@
 #define TOV0    0
 #define OCF0A   1
 #define OCF0B   2
+
+
+/* Timer/Counter1 related registers */
+#define TCCR1A  (*(volatile uint8_t *)0x80)
+#define WGM10   0
+#define WGM11   1
+#define COM1B0  4
+#define COM1B1  5
+#define COM1A0  6
+#define COM1A1  7
+
+#define TCCR1B  (*(volatile uint8_t *)0x81)
+#define CS10    0
+#define CS11    1
+#define CS12    2
+#define WGM12   3
+#define WGM13   4
+#define ICES1   6
+#define ICNC1   7
+
+#define TCCR1C  (*(volatile uint8_t *)0x82)
+#define FOC1B   6
+#define FOC1A   7
+
+#define TCNT1H  (*(volatile uint8_t *)0x85)
+#define TCNT1L  (*(volatile uint8_t *)0x84)
+
+#define OCR1AH  (*(volatile uint8_t *)0x89)
+#define OCR1AL  (*(volatile uint8_t *)0x88)
+
+#define OCR1BH  (*(volatile uint8_t *)0x8B)
+#define OCR1BL  (*(volatile uint8_t *)0x8A)
+
+#define ICR1H   (*(volatile uint8_t *)0x87)
+#define ICR1L   (*(volatile uint8_t *)0x86)
+
+#define TIMSK1  (*(volatile uint8_t *)0x6F)
+#define TOIE1   0
+#define OCIE1A  1
+#define OCIE1B  2
+#define ICIE1   5
+
+#define TIFR1   (*(volatile uint8_t *)0x36)
+#define TOV1    0
+#define OCF1A   1
+#define OCF1B   2
+#define ICF1    5
+
 
 /* Power reduction register */
 #define PRR     (*(volatile uint8_t *)0x64)

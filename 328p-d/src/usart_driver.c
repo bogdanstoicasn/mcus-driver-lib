@@ -48,7 +48,7 @@ uint8_t  usart_receive_byte(void)
 	return UDR0;
 }
 
-uint8_t usart_transmite_byte(uint8_t ch)
+uint8_t usart_transmit_byte(uint8_t ch)
 {
 	while (!(UCSR0A & (1 << UDRE0)));
 

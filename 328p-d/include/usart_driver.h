@@ -39,7 +39,7 @@ uint8_t usart_receive_byte(void);
  * @return SUCCESS or FAILURE
  * TODO: maybe check for errors in ch
  */
-uint8_t usart_transmite_byte(uint8_t ch);
+uint8_t usart_transmit_byte(uint8_t ch);
 
 /* Usart disable 
  *

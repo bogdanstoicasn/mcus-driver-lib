@@ -37,6 +37,9 @@ EEPROM_OBJ = $(EEPROM_SRC:.c=.o)
 WDT_SRC = src/wdt_driver.c
 WDT_OBJ = $(WDT_SRC:.c=.o)
 
+SPI_SRC = src/spi_driver.c
+SPI_OBJ = $(SPI_SRC:.c=.o)
+
 # File to keep track of library objects
 LIB_OBJS_FILE = lib_objs.txt
 
@@ -78,6 +81,10 @@ wdt: $(WDT_OBJ)
 	echo $(WDT_OBJ) >> $(LIB_OBJS_FILE)
 	@echo "WDT driver added to the library!"
 
+spi: $(SPI_OBJ)
+	echo $(SPI_OBJ) >> $(LIB_OBJS_FILE)
+	@echo "SPI driver added to the library!"
+
 # Rule to create the static library from the objects
 lib: $(LIB_OBJS_FILE)
 	@echo "Creating library with objects: $(shell cat $(LIB_OBJS_FILE))"
@@ -85,7 +92,7 @@ lib: $(LIB_OBJS_FILE)
 	@echo "Library created: $(LIBRARY)"
 
 # All rule for ease of use
-all: gpio usart twi pwm adc eeprom wdt
+all: gpio usart twi pwm adc eeprom wdt spi
 	@echo "All drivers added to the library!"
 
 # Rule to build the main app and link it with the library
@@ -104,7 +111,7 @@ flash: $(HEX_FILE)
 
 # Clean rule
 clean:
-	rm -f $(LIBRARY) $(MAIN_OBJ) $(HEX_FILE) temp.elf $(GPIO_OBJ) $(USART_OBJ) $(TWI_OBJ) $(PWM_OBJ) $(ADC_OBJ) $(EEPROM_OBJ) $(WDT_OBJ) $(LIB_OBJS_FILE)
+	rm -f $(LIBRARY) $(MAIN_OBJ) $(HEX_FILE) temp.elf $(GPIO_OBJ) $(USART_OBJ) $(TWI_OBJ) $(PWM_OBJ) $(ADC_OBJ) $(EEPROM_OBJ) $(WDT_OBJ) $(SPI_OBJ) $(LIB_OBJS_FILE)
 
 # Phony targets
-.PHONY: all run flash lib clean gpio usart twi pwm adc eeprom wdt
+.PHONY: all run flash lib clean gpio usart twi pwm adc eeprom wdt spi
