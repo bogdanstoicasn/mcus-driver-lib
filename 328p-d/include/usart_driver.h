@@ -36,10 +36,9 @@ uint8_t usart_receive_byte(void);
  * 
  * @param ch - byte to be sent
  *
- * @return SUCCESS or FAILURE
  * TODO: maybe check for errors in ch
  */
-uint8_t usart_transmit_byte(uint8_t ch);
+void  usart_transmit_byte(uint8_t ch);
 
 /* Usart disable 
  *

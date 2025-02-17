@@ -96,7 +96,12 @@ all: gpio usart twi pwm adc eeprom wdt spi
 	@echo "All drivers added to the library!"
 
 # Rule to build the main app and link it with the library
-run: all $(MAIN_OBJ) $(LIBRARY)
+run: all lib  $(MAIN_OBJ) $(LIBRARY)
+	$(CC) $(CFLAGS) -o temp.elf $(MAIN_SRC) $(LIBRARY)
+	$(OBJCOPY) $(OBJCPYFLAGS) temp.elf $(HEX_FILE)
+	@echo "Hex file created: $(HEX_FILE)"
+
+main: $(MAIN_OBJ) $(LIBRARY)
 	$(CC) $(CFLAGS) -o temp.elf $(MAIN_SRC) $(LIBRARY)
 	$(OBJCOPY) $(OBJCPYFLAGS) temp.elf $(HEX_FILE)
 	@echo "Hex file created: $(HEX_FILE)"

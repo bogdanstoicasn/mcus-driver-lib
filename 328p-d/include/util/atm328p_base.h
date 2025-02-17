@@ -126,8 +126,8 @@
 
 #define UCSR0C  (*(volatile uint8_t *)0xC2)
 #define UCPOL0  0
-#define UCBZ00  1
-#define UCBZ01  2
+#define UCSZ00  1
+#define UCSZ01  2
 #define USBS0   3
 #define UPM00   4
 #define UPM01   5

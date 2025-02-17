@@ -11,10 +11,10 @@ void usart_init(uint8_t parity, uint8_t stop)
 	UCSR0B |= (1 << TXEN0) | (1 << RXEN0);
 
 	/* Set size of 8 bits */
-	UCSR0C |= (1 << UCBZ00) | (1 << UCBZ01);
+	UCSR0C |= (1 << UCSZ00) | (1 << UCSZ01);
 
 	/* Check if it's async mode */
-	UCSR0C &= ~(1 << UMSEL00) & ~(1 << UMSEL01);
+	UCSR0C &= ~((1 << UMSEL00) | (1 << UMSEL01));
 
 	 /* Disable double speed */
 	UCSR0A &= ~(1 << U2X0);
@@ -32,7 +32,7 @@ void usart_init(uint8_t parity, uint8_t stop)
 		UCSR0C |= (1 << UPM01) | (1 << UPM00);
 		break;
 	default:
-        UCSR0C &= ~(1 << UPM00) & ~(1 << UPM01);
+        UCSR0C &= ~((1 << UPM00) | (1 << UPM01));
 		break;
 	}
 
@@ -48,13 +48,11 @@ uint8_t  usart_receive_byte(void)
 	return UDR0;
 }
 
-uint8_t usart_transmit_byte(uint8_t ch)
+void usart_transmit_byte(uint8_t ch)
 {
 	while (!(UCSR0A & (1 << UDRE0)));
 
 	UDR0 = ch;
-
-	return STATUS_SUCCESS;
 }
 
 /* Use for critical operations
