@@ -22,12 +22,10 @@ void wdt_enable(wdt_prescaler value)
 
 	WDTCSR |= (1 << WDCE) | (1 << WDE);
 	
-	if (value == PRESCALER_16MS) {
-		WDTCSR = (1 << WDE);
-		return;
-	}
+	if (value == PRESCALER_16MS) WDTCSR = (1 << WDE);
+	else WDTCSR = (1 << WDE) | value;
 
-	WDTCSR = (1 << WDE) | value;
+	WDTCSR |= (1 << WDIE);
 
 	ENABLE_INTERRUPTS();
 }

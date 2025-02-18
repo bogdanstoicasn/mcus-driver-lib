@@ -8,5 +8,6 @@
 #include "./include/twi_driver.h"
 #include "./include/usart_driver.h"
 #include "./include/interrupt_driver.h"
+#include "./include/wdt_driver.h"
 
 #endif
