@@ -17,7 +17,8 @@ void adc_init(uint8_t pin, uint8_t prescaler, uint8_t ref_voltage)
 
 	ADMUX = (ADMUX & ~(1 << REFS1 | 1 << REFS0)) | (ref_voltage << REFS0);
 
-	/* Set the channel(pin)
+	/* 
+	 * Set the channel(pin)
 	 * Ignore reserved bits
 	 * MUX3 can be ignored sometimes because is only used for
 	 * differential inputs or internal channels
@@ -30,7 +31,8 @@ void adc_init(uint8_t pin, uint8_t prescaler, uint8_t ref_voltage)
 
 void adc_disable(void)
 {
-	/* Disable ADC in the control register 
+	/* 
+	 * Disable ADC in the control register 
 	 * Disclaimer: it stops the current conversion
 	 */
 	ADCSRA &= ~(1 << ADEN);
@@ -46,7 +48,8 @@ uint16_t adc_read(void)
 	
 	while (ADCSRA & (1 << ADSC));
 
-	/* First we get the low value!
+	/* 
+	 * First we get the low value!
 	 * If high is checked first the both low and high regs will be reset
 	 */
 	uint8_t low = ADCL;

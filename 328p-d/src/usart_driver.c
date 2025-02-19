@@ -1,6 +1,5 @@
 #include "../include/usart_driver.h"
 
-
 void usart_init(uint8_t parity, uint8_t stop)
 {
 	/* Load lower and upper bits of the baud rate */
@@ -37,7 +36,12 @@ void usart_init(uint8_t parity, uint8_t stop)
 	}
 
 	/* Check for stop bits */
-	UCSR0C = (UCSR0C & ~(1 << USBS0)) | ((stop == 2) << USBS0);
+	//UCSR0C = (UCSR0C & ~(1 << USBS0)) | ((stop == 2) << USBS0);
+	UCSR0C &= ~(1 << USBS0);  // Clear stop bit first
+	if (stop == 2) {
+    	UCSR0C |= (1 << USBS0);  // Set for 2 stop bits
+	}
+
 	
 }
 
@@ -55,9 +59,10 @@ void usart_transmit_byte(uint8_t ch)
 	UDR0 = ch;
 }
 
-/* Use for critical operations
+/* 
+ * Use for critical operations
  * For everyday project is obsolete
- * */
+ */
 void usart_disable(void)
 {
 	/* Disable the transm and recv */

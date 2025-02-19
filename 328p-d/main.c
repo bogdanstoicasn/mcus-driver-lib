@@ -11,10 +11,17 @@ void test_usart(void)
 	for (uint8_t i = 0; i < 6; i++){
 		usart_transmit_byte(strin[i]);
 	}
-
-	uint8_t data = usart_receive_byte();
-	if (data == 'y') usart_transmit_byte('Y');
-	else usart_transmit_byte('N');
+	
+	/* Echo test */
+	uint8_t data = 0;
+	while (1) {
+		data = usart_receive_byte();
+		usart_transmit_byte(data + 1);
+		if (data == 'q') {
+			usart_transmit_byte('\n');
+			break;
+		}
+	}
 }
 
 void test_eeprom()
@@ -34,22 +41,23 @@ write_done:
 	}
 
 }
-// vect 6 in table(don't forget)
+
+// Watchdog interrupt vector for WDT interrupt
+void __vector_6(void) __attribute__ ((signal, used));
+void __vector_6(void)
+{
+    // Toggle LED on pin PD7 (example LED on an ATmega328P board)
+    gpio_toggle(&PORTD, PORTD7);
+
+    // Optionally reset the watchdog timer if needed (if the interrupt is to refresh the WDT)
+    // WDT_RESET();
+}
+
 void test_wdt()
 {
 	gpio_setup(&DDRD, PORTD7, OUT);
-	gpio_write(&PORTD, PORTD7, OUT);
-	
-	while(1) {
-		_delay_ms(1000);
-		gpio_toggle(&PORTD, PORTD7);
-	}
+	wdt_enable(WDT_PRESCALER_1S, WDT_MODE_INTERRUPT);
 }
-
-/*
- * Define ISR manually 
- */
-
 
 int main()
 {
@@ -57,9 +65,10 @@ int main()
 	test_usart();
 	test_eeprom();
 	test_wdt();
-	while(1) {
-		_delay_ms(2000);
-	}
 
-	return 0;
+    while (1) {
+
+    }
+
+    return 0;
 }

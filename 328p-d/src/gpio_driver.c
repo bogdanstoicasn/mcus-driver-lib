@@ -1,16 +1,5 @@
 #include "../include/gpio_driver.h"
 
-/*
-void gpio_init(volatile uint8_t *ddr, uint8_t pin_mask, uint8_t mode) {
-    if (mode == 1) {
-        *ddr |= pin_mask; // Set pins as output
-    } else {
-        *ddr &= ~pin_mask; // Set pins as input
-    }
-}
- * If want to use mask decomm this function
- */
-
 void gpio_setup(volatile uint8_t *ddr, uint8_t pin, uint8_t state)
 {
     /* Clears the bit at that pin and then sets it how you want */
