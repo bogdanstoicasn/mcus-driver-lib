@@ -59,11 +59,66 @@ void test_wdt()
 	wdt_enable(WDT_PRESCALER_1S, WDT_MODE_INTERRUPT);
 }
 
+void usart_send_hex(uint8_t num)
+{
+    uint8_t high_nibble = (num >> 4) & 0x0F;
+    uint8_t low_nibble = num & 0x0F;
+
+    usart_transmit_byte('0'); 
+    usart_transmit_byte('x');
+
+    usart_transmit_byte(high_nibble < 10 ? '0' + high_nibble : 'A' + (high_nibble - 10));
+    usart_transmit_byte(low_nibble < 10 ? '0' + low_nibble : 'A' + (low_nibble - 10));
+
+    usart_transmit_byte('\n');
+}
+
+void test_twi()
+{
+	/* The function sets the required ports as input too */
+	twi_init(twi_freq_100k, 1);
+
+	uint8_t err;
+	uint8_t test_addr = 'A';
+
+	/* Check for the address */
+	for (uint8_t addr = 0x00; addr < 0x80; addr++) {
+		err = twi_master_tx(&test_addr, 1, addr, 0);
+
+		if (err == STATUS_SUCCESS) {
+			usart_transmit_byte('Y');
+			usart_transmit_byte('-');
+			usart_send_hex(addr);
+			test_addr = addr;
+			break;
+		}
+	}
+
+	/* Send strin and see the responses */
+	uint8_t received_data[6] = {0};
+	err = twi_master_tx((uint8_t *)strin, 6, test_addr, 0);
+	if (err) {
+		usart_transmit_byte('N');
+		usart_transmit_byte('\n');
+	}
+	err = twi_master_rx(received_data, 6, test_addr);
+	if (err) {
+		usart_transmit_byte('N');
+		usart_transmit_byte('\n');
+	}
+
+	for (uint8_t i = 0; i < 6; i++) {
+		usart_send_hex(received_data[i]);
+	}
+	
+}
+
 int main()
 {
 
 	test_usart();
 	test_eeprom();
+	test_twi();
 	test_wdt();
 
     while (1) {

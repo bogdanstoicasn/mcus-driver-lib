@@ -96,15 +96,13 @@ static uint8_t twi_read(uint8_t ack)
 
 uint8_t twi_init(twi_freq_mode freq, uint8_t pullup)
 {
-	DDRC |= (1 << TWI_SCL_PIN) | (1 << TWI_SDA_PIN);
+	DDRC &= ~((1 << TWI_SCL_PIN) | (1 << TWI_SDA_PIN));
 
 	/* Enable pullup resistor */
 	if (pullup)
 		PORTC |= (1 << TWI_SCL_PIN) | (1 << TWI_SDA_PIN);
 	else
 		PORTC &= ~((1 << TWI_SCL_PIN) | (1 << TWI_SDA_PIN));
-
-	DDRC &= ~((1 << TWI_SCL_PIN) | (1 << TWI_SDA_PIN));
 
 	switch (freq) {
 		case twi_freq_100k:
@@ -125,6 +123,7 @@ uint8_t twi_init(twi_freq_mode freq, uint8_t pullup)
 
 	return STATUS_SUCCESS;
 }
+
 uint8_t twi_master_tx(uint8_t *data, uint8_t size, uint8_t addr, uint8_t repeat_req)
 {
 	uint8_t err;
