@@ -113,12 +113,34 @@ void test_twi()
 	
 }
 
+void test_pwm()
+{
+	tc0_pwm_init(MODE_FAST, PRESCALER_1024, 0x80);
+}
+
+void test_adc()
+{
+	adc_init(0, PRESC_VAL_32, AVCC_EXT_CAPACITOR_AREF_PIN);
+	uint8_t counter = 0;
+	while (1) {
+		uint16_t adc_val = adc_read();
+		usart_send_hex(adc_val);
+		_delay_ms(1000);
+		if (counter++ == 10) {
+			adc_disable();
+			break;
+		}
+	}
+}
+
 int main()
 {
 
 	test_usart();
 	test_eeprom();
 	test_twi();
+	test_pwm();
+	test_adc();
 	test_wdt();
 
     while (1) {

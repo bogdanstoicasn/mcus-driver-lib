@@ -2,29 +2,38 @@
 
 uint8_t tc0_pwm_init(pwm_mode mode, pwm_prescaler prescaler, uint8_t duty_cycle)
 {
-	DDRD |= (1 << PORTD6);
+    /* Set PD6 (OC0A) as output */
+    DDRD |= (1 << PORTD6);
 
 #ifdef CLEAN
-	TCCR0A &= ~((1 << WGM00) | (1 << WGM01) | (1 << COM0B0) | (1 << COM0B1) | (1 << COM0A0) | (1 << COM0A1));
-	TCCR0B &= ~((1 << CS00) | (1 << CS01) | (1 << CS02) | (1 << WGM02) | (1 << FOC0B) | (1 << FOC0A)) ;
+    /* Reset TCCR0A and TCCR0B */
+    TCCR0A &= ~((1 << WGM00) | (1 << WGM01) | (1 << COM0A0) | (1 << COM0A1));
+    TCCR0B &= ~((1 << WGM02) | (1 << CS00) | (1 << CS01) | (1 << CS02));
 #endif
 
-	switch (mode) {
-	case MODE_FAST:
-		TCCR0A |= (1 << WGM00) | (1 << WGM01);
-		break;
-	case MODE_PHASE_CORRECT:
-		TCCR0A |= (1 << WGM00);
-		break;
-	default:
-		return STATUS_FAILURE;
-	}
-	
-	OCR0A = duty_cycle;
+    /* Set PWM mode */
+    switch (mode) {
+    case MODE_FAST:
+        /* Fast PWM mode (TOP = 0xFF) */
+        TCCR0A |= (1 << WGM00) | (1 << WGM01);
+        break;
+    case MODE_PHASE_CORRECT:
+        /* Phase Correct PWM */
+        TCCR0A |= (1 << WGM00);
+        break;
+    default:
+        return STATUS_FAILURE;
+    }
 
-	TCCR0B = prescaler;
+    /* Set duty cycle */
+    OCR0A = duty_cycle;  // Adjust if using OC0B instead
 
-	TCCR0A |= (1 << COM0A1);
+    /* Enable PWM output on OC0A (PD6) */
+    TCCR0A |= (1 << COM0A1);
 
-	return STATUS_SUCCESS;
+    /* Set clock prescaler */
+    TCCR0B |= prescaler;  
+
+    return STATUS_SUCCESS;
 }
+

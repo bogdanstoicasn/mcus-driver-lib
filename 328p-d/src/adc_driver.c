@@ -15,7 +15,7 @@ void adc_init(uint8_t pin, uint8_t prescaler, uint8_t ref_voltage)
 	if (ref_voltage == 2 || ref_voltage > 2)
 		ref_voltage = AVCC_EXT_CAPACITOR_AREF_PIN;
 
-	ADMUX = (ADMUX & ~(1 << REFS1 | 1 << REFS0)) | (ref_voltage << REFS0);
+	ADMUX = (ADMUX & ~((1 << REFS1) | (1 << REFS0))) | (ref_voltage << REFS0);
 
 	/* 
 	 * Set the channel(pin)
@@ -26,7 +26,7 @@ void adc_init(uint8_t pin, uint8_t prescaler, uint8_t ref_voltage)
 	if (!((pin <= 7) || pin == 0x0E || pin == 0x0F))
 		pin = 0;
 
-	ADMUX = (ADMUX & ~(1 << MUX0 | 1 << MUX1 | 1 << MUX2 | 1 << MUX3)) | (pin & 0x0F);
+	ADMUX = (ADMUX & ~((1 << MUX0) | (1 << MUX1) | (1 << MUX2) | (1 << MUX3))) | (pin & 0x0F);
 }
 
 void adc_disable(void)
