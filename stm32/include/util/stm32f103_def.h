@@ -3,6 +3,8 @@
 
 #include "stm32f103_base.h"
 
+#define BITBAND(addr, bit)(*(volatile uint32_t *)(0x42000000 + ((uint32_t)(addr) - 0x40000000) * 32 + (bit * 4)))
+
 /* GPIO register components */
 typedef struct {
 	volatile uint32_t crl;
@@ -20,7 +22,7 @@ typedef struct {
 	volatile uint32_t cfgr;
 	volatile uint32_t cir;
 	volatile uint32_t apb2rstr;
-	volatile uint32_t abp1rstr;
+	volatile uint32_t apb1rstr;
 	volatile uint32_t ahbenr;
 	volatile uint32_t apb2enr;
 	volatile uint32_t apb1enr;
@@ -63,22 +65,32 @@ typedef struct {
 	volatile uint32_t dr;
 } adc_def;
 
+/* IWDG register components */
+typedef struct {
+	volatile uint32_t kr;
+	volatile uint32_t pr;
+	volatile uint32_t rlr;
+	volatile uint32_t sr;
+} iwdg_def;
 
-#define GPIOA ((gpio_def *) GPIOA_BASE)
-#define GPIOB ((gpio_def *) GPIOB_BASE)
-#define GPIOC ((gpio_def *) GPIOC_BASE)
-#define GPIOD ((gpio_def *) GPIOD_BASE)
-#define GPIOE ((gpio_def *) GPIOE_BASE)
-#define GPIOF ((gpio_def *) GPIOF_BASE)
-#define GPIOG ((gpio_def *) GPIOG_BASE)
 
-#define RCC   ((rcc_def *) RCC_BASE)
+#define GPIOA ((volatile gpio_def *) GPIOA_BASE)
+#define GPIOB ((volatile gpio_def *) GPIOB_BASE)
+#define GPIOC ((volatile gpio_def *) GPIOC_BASE)
+#define GPIOD ((volatile gpio_def *) GPIOD_BASE)
+#define GPIOE ((volatile gpio_def *) GPIOE_BASE)
+#define GPIOF ((volatile gpio_def *) GPIOF_BASE)
+#define GPIOG ((volatile gpio_def *) GPIOG_BASE)
 
-#define USART1 ((usart_def *) USART1_BASE)
-#define USART2 ((usart_def *) USART2_BASE)
-#define USART3 ((usart_def *) USART3_BASE)
+#define RCC   ((volatile rcc_def *) RCC_BASE)
 
-#define ADC1 ((adc_def *) ADC1_BASE)
-#define ADC2 ((adc_def *) ADC2_BASE)
+#define USART1 ((volatile usart_def *) USART1_BASE)
+#define USART2 ((volatile usart_def *) USART2_BASE)
+#define USART3 ((volatile usart_def *) USART3_BASE)
+
+#define ADC1 ((volatile adc_def *) ADC1_BASE)
+#define ADC2 ((volatile adc_def *) ADC2_BASE)
+
+#define IWDG ((volatile iwdg_def *) IWDG_BASE)
 
 #endif
