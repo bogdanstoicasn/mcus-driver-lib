@@ -21,6 +21,9 @@ USART_OBJ = $(USART_SRC:.c=.o)
 ADC_SRC = src/adc_driver.c
 ADC_OBJ = $(ADC_SRC:.c=.o)
 
+IWDG_SRC = src/iwdg_driver.c
+IWDG_OBJ = $(IWDG_SRC:.c=.o)
+
 #Files to keep track of lib objects
 LIB_OBJS_FILE = lib_objs.txt
 
@@ -41,6 +44,10 @@ adc: $(ADC_OBJ)
 	echo $(ADC_OBJ) >> $(LIB_OBJS_FILE)
 	@echo "ADC driver added to the library!"
 
+iwdg: $(IWDG_OBJ)
+	echo $(IWDG_OBJ) >> $(LIB_OBJS_FILE)
+	@echo "IWDG driver added to the library!"
+
 #Rule to create the lib
 lib: $(LIB_OBJS_FILE)
 	@echo "Creating library with objects: $(shell cat $(LIB_OBJS_FILE))"
@@ -48,12 +55,17 @@ lib: $(LIB_OBJS_FILE)
 	@echo "Library created: $(LIBRARY)"
 
 #Rule all
-all: gpio usart adc
+all: gpio usart adc iwdg
 	@echo "All drivers added to the library!"
 
 #Rule to build main and link lib
 run: all $(MAIN_OBJ) $(LIBRARY)
 	$(CC) $(CFLAGS) -o main.elf $(MAIN_SRC) $(LIBRARY) $(LDFLAGS)
+	@echo "Hex file created!"
+
+main: $(MAIN_OBJ) $(LIBRARY)
+	$(CC) $(CFLAGS) -o main.elf $(MAIN_SRC) $(LIBRARY) $(LDFLAGS)
+	@echo "Hex file created!"
 
 #Rule to build objects
 %.o: %.c
@@ -61,9 +73,9 @@ run: all $(MAIN_OBJ) $(LIBRARY)
 
 #Rule to clean
 clean:
-	rm -f $(GPIO_OBJ) $(USART_OBJ) $(ADC_OBJ) $(MAIN_OBJ) $(LIBRARY) $(LIB_OBJS_FILE) main.elf
+	rm -f $(GPIO_OBJ) $(USART_OBJ) $(ADC_OBJ) $(IWDG_OBJ) $(MAIN_OBJ) $(LIBRARY) $(LIB_OBJS_FILE) main.elf
 
 #Phony targets
-.PHONY: all run clean lib gpio usart adc
+.PHONY: all run clean lib gpio usart adc iwdg
 
 
