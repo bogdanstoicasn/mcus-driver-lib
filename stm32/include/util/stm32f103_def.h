@@ -73,6 +73,12 @@ typedef struct {
 	volatile uint32_t sr;
 } iwdg_def;
 
+/* WWDG register components */
+typedef struct {
+	volatile uint32_t cr;
+	volatile uint32_t cfr;
+	volatile uint32_t sr;
+} wwdg_def;
 
 #define GPIOA ((volatile gpio_def *) GPIOA_BASE)
 #define GPIOB ((volatile gpio_def *) GPIOB_BASE)
@@ -92,5 +98,6 @@ typedef struct {
 #define ADC2 ((volatile adc_def *) ADC2_BASE)
 
 #define IWDG ((volatile iwdg_def *) IWDG_BASE)
+#define WWDG ((volatile wwdg_def *) WWDG_BASE)
 
 #endif
