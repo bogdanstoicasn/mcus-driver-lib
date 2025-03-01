@@ -24,6 +24,9 @@ ADC_OBJ = $(ADC_SRC:.c=.o)
 IWDG_SRC = src/iwdg_driver.c
 IWDG_OBJ = $(IWDG_SRC:.c=.o)
 
+WWDG_SRC = src/wwdg_driver.c
+WWDG_OBJ = $(WWDG_SRC:.c=.o)
+
 #Files to keep track of lib objects
 LIB_OBJS_FILE = lib_objs.txt
 
@@ -48,6 +51,10 @@ iwdg: $(IWDG_OBJ)
 	echo $(IWDG_OBJ) >> $(LIB_OBJS_FILE)
 	@echo "IWDG driver added to the library!"
 
+wwdg: $(WWDG_OBJ)
+	echo $(WWDG_OBJ) >> $(LIB_OBJS_FILE)
+	@echo "WWDG driver added to the library!"
+
 #Rule to create the lib
 lib: $(LIB_OBJS_FILE)
 	@echo "Creating library with objects: $(shell cat $(LIB_OBJS_FILE))"
@@ -55,7 +62,7 @@ lib: $(LIB_OBJS_FILE)
 	@echo "Library created: $(LIBRARY)"
 
 #Rule all
-all: gpio usart adc iwdg
+all: gpio usart adc iwdg wwdg
 	@echo "All drivers added to the library!"
 
 #Rule to build main and link lib
@@ -73,9 +80,9 @@ main: $(MAIN_OBJ) $(LIBRARY)
 
 #Rule to clean
 clean:
-	rm -f $(GPIO_OBJ) $(USART_OBJ) $(ADC_OBJ) $(IWDG_OBJ) $(MAIN_OBJ) $(LIBRARY) $(LIB_OBJS_FILE) main.elf
+	rm -f $(GPIO_OBJ) $(USART_OBJ) $(ADC_OBJ) $(IWDG_OBJ) $(WWDG_OBJ) $(MAIN_OBJ) $(LIBRARY) $(LIB_OBJS_FILE) main.elf
 
 #Phony targets
-.PHONY: all run clean lib gpio usart adc iwdg
+.PHONY: all run clean lib gpio usart adc iwdg wwdg
 
 

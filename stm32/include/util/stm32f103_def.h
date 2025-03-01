@@ -80,6 +80,30 @@ typedef struct {
 	volatile uint32_t sr;
 } wwdg_def;
 
+/* TIM2/3/4 register components */
+typedef struct {
+	volatile uint32_t cr1;
+	volatile uint32_t cr2;
+	volatile uint32_t smcr;
+	volatile uint32_t dier;
+	volatile uint32_t sr;
+	volatile uint32_t egr;
+	volatile uint32_t ccmr1;
+	volatile uint32_t ccmr2;
+	volatile uint32_t ccer;
+	volatile uint32_t cnt;
+	volatile uint32_t psc;
+	volatile uint32_t arr;
+	volatile uint32_t RESERVED0;
+	volatile uint32_t ccr1;
+	volatile uint32_t ccr2;
+	volatile uint32_t ccr3;
+	volatile uint32_t ccr4;
+	volatile uint32_t RESERVED1;
+	volatile uint32_t dcr;
+	volatile uint32_t dmar;
+} timgen_def;
+
 #define GPIOA ((volatile gpio_def *) GPIOA_BASE)
 #define GPIOB ((volatile gpio_def *) GPIOB_BASE)
 #define GPIOC ((volatile gpio_def *) GPIOC_BASE)
@@ -99,5 +123,10 @@ typedef struct {
 
 #define IWDG ((volatile iwdg_def *) IWDG_BASE)
 #define WWDG ((volatile wwdg_def *) WWDG_BASE)
+
+#define TIM2 ((volatile timgen_def *) TIM2_BASE)
+#define TIM3 ((volatile timgen_def *) TIM3_BASE)
+#define TIM4 ((volatile timgen_def *) TIM4_BASE)
+
 
 #endif

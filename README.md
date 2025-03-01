@@ -12,14 +12,13 @@ TWI (I2C) interfacing, and basic control of peripherals like LEDs and LCD displa
 
 > Volatile
 
+> Open to contribs
 
-> open to contribs
+### Target MCUS
 
-### Bought MCUS
+1. atmega328p/atmega168/atmega88/atmega48
 
-1. atmega328p
-
-2. stm32f103c8
+2. stm32f101xx/stm32f102xx/stm32f103xx low- and medium-density
 
 3. rp2040
 
