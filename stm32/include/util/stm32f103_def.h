@@ -104,6 +104,17 @@ typedef struct {
 	volatile uint32_t dmar;
 } timgen_def;
 
+typedef struct {
+	volatile uint32_t cr1;
+	volatile uint32_t cr2;
+	volatile uint32_t sr;
+	volatile uint32_t dr;
+	volatile uint32_t crcpr;
+	volatile uint32_t txcrcr;
+	volatile uint32_t i2scfgr;
+	volatile uint32_t i2spr;
+} spi_def;
+
 #define GPIOA ((volatile gpio_def *) GPIOA_BASE)
 #define GPIOB ((volatile gpio_def *) GPIOB_BASE)
 #define GPIOC ((volatile gpio_def *) GPIOC_BASE)
@@ -128,5 +139,8 @@ typedef struct {
 #define TIM3 ((volatile timgen_def *) TIM3_BASE)
 #define TIM4 ((volatile timgen_def *) TIM4_BASE)
 
+#define SPI1 ((volatile spi_def *) SPI1_BASE)
+#define SPI2_I2S ((volatile spi_def *) SPI2_I2S_BASE)
+#define SPI3_I2S ((volatile spi_def *) SPI3_I2S_BASE)
 
 #endif
