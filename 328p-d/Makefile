@@ -7,7 +7,8 @@ F_CPU = 16000000UL
 # Compiler and Flags + Utils
 CC = avr-gcc
 CFLAGS = -mmcu=$(MCU) -DF_CPU=$(F_CPU) -Wall -Wextra -Werror -Os -Iinclude \
-	-fdata-sections -ffunction-sections -Wundef
+		 -fdata-sections -ffunction-sections -Wundef
+
 LDFLAGS = -mmcu=$(MCU) -Wl,--gc-sections
 
 OBJCOPY = avr-objcopy
@@ -49,10 +50,8 @@ LIB_OBJS_FILE = lib_objs.txt
 MAIN_SRC = main.c
 MAIN_OBJ = $(MAIN_SRC:.c=.o)
 HEX_FILE = main.hex
-
-# Rule to build the object
-#%.o: %.c
-#	$(CC) $(CFLAGS) -c $< -o $@
+ELF_FILE = main.elf
+DEBUG_FILE = main.s
 
 # Rule to add LED to LIB_OBJS
 gpio: $(GPIO_OBJ)
@@ -99,13 +98,13 @@ all: gpio usart twi pwm adc eeprom wdt spi
 
 # Rule to build the main app and link it with the library
 run: all lib  $(MAIN_OBJ) $(LIBRARY)
-	$(CC) $(CFLAGS) $(LDFLAGS) -o temp.elf $(MAIN_SRC) $(LIBRARY)
-	$(OBJCOPY) $(OBJCPYFLAGS) temp.elf $(HEX_FILE)
+	$(CC) $(CFLAGS) $(LDFLAGS) -o $(ELF_FILE) $(MAIN_SRC) $(LIBRARY)
+	$(OBJCOPY) $(OBJCPYFLAGS) $(ELF_FILE) $(HEX_FILE)
 	@echo "Hex file created: $(HEX_FILE)"
 
 main: $(MAIN_OBJ) $(LIBRARY)
-	$(CC) $(CFLAGS) $(LDFLAGS) -o temp.elf $(MAIN_SRC) $(LIBRARY)
-	$(OBJCOPY) $(OBJCPYFLAGS) temp.elf $(HEX_FILE)
+	$(CC) $(CFLAGS) $(LDFLAGS) -o $(ELF_FILE) $(MAIN_SRC) $(LIBRARY)
+	$(OBJCOPY) $(OBJCPYFLAGS) $(ELF_FILE) $(HEX_FILE)
 	@echo "Hex file created: $(HEX_FILE)"
 
 # Flash the program to the atmega328p
@@ -118,7 +117,11 @@ flash: $(HEX_FILE)
 
 # Clean rule
 clean:
-	rm -f $(LIBRARY) $(MAIN_OBJ) $(HEX_FILE) temp.elf $(GPIO_OBJ) $(USART_OBJ) $(TWI_OBJ) $(PWM_OBJ) $(ADC_OBJ) $(EEPROM_OBJ) $(WDT_OBJ) $(SPI_OBJ) $(LIB_OBJS_FILE)
+	rm -f $(LIBRARY) $(MAIN_OBJ) $(HEX_FILE) $(ELF_FILE) $(DEBUG_FILE) $(GPIO_OBJ) $(USART_OBJ) $(TWI_OBJ) $(PWM_OBJ) $(ADC_OBJ) $(EEPROM_OBJ) $(WDT_OBJ) $(SPI_OBJ) $(LIB_OBJS_FILE)
+
+# Debugging
+debugging:
+	$(CC) $(CFLAGS) -S $(MAIN_SRC) -o $(DEBUG_FILE)
 
 # Phony targets
-.PHONY: all run flash lib clean gpio usart twi pwm adc eeprom wdt spi
+.PHONY: all run flash lib clean gpio usart twi pwm adc eeprom wdt spi debugging
