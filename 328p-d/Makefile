@@ -6,7 +6,9 @@ F_CPU = 16000000UL
 
 # Compiler and Flags + Utils
 CC = avr-gcc
-CFLAGS = -mmcu=$(MCU) -DF_CPU=$(F_CPU) -Wall -Wextra -Werror -Os -Iinclude
+CFLAGS = -mmcu=$(MCU) -DF_CPU=$(F_CPU) -Wall -Wextra -Werror -Os -Iinclude \
+	-fdata-sections -ffunction-sections -Wundef
+LDFLAGS = -mmcu=$(MCU) -Wl,--gc-sections
 
 OBJCOPY = avr-objcopy
 OBJCPYFLAGS = -O ihex
@@ -97,12 +99,12 @@ all: gpio usart twi pwm adc eeprom wdt spi
 
 # Rule to build the main app and link it with the library
 run: all lib  $(MAIN_OBJ) $(LIBRARY)
-	$(CC) $(CFLAGS) -o temp.elf $(MAIN_SRC) $(LIBRARY)
+	$(CC) $(CFLAGS) $(LDFLAGS) -o temp.elf $(MAIN_SRC) $(LIBRARY)
 	$(OBJCOPY) $(OBJCPYFLAGS) temp.elf $(HEX_FILE)
 	@echo "Hex file created: $(HEX_FILE)"
 
 main: $(MAIN_OBJ) $(LIBRARY)
-	$(CC) $(CFLAGS) -o temp.elf $(MAIN_SRC) $(LIBRARY)
+	$(CC) $(CFLAGS) $(LDFLAGS) -o temp.elf $(MAIN_SRC) $(LIBRARY)
 	$(OBJCOPY) $(OBJCPYFLAGS) temp.elf $(HEX_FILE)
 	@echo "Hex file created: $(HEX_FILE)"
 
