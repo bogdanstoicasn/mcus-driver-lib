@@ -1,18 +1,36 @@
 #include "../include/spi_driver.h"
 
-uint16_t spi_master_receive(void)
+void spi_master_transmit(volatile spi_config *hspi, uint16_t data)
 {
-	SPI1->dr = 0xFF;
+	while (!(hspi->SPIx->sr &  (1 << 1)));
 
-	/* Wait for RXNE */
-	while (!(SPI1->sr & (1 << 0)));
+	hspi->SPIx->dr = data;
 
-	return (uint16_t)SPI1->dr;
+	while (!(hspi->SPIx->sr & (1 << 0)));
+
+	while (hspi->SPIx->sr & (1 << 7));
 }
 
-uint16_t spi_slave_receive(void)
+uint16_t spi_master_receive(volatile spi_config *hspi)
 {
-	while (!(SPI1->sr & (1 << 0))) ;
+	hspi->SPIx->dr = 0xFF;
+	/* Wait for RXNE */
+	while (!(hspi->SPIx->sr & (1 << 0)));
+
+	return (uint16_t)hspi->SPIx->dr;
+}
+
+/* Slave section */
+void spi_slave_transmit(volatile spi_config *hspi, uint16_t data)
+{
+	while (!(hspi->SPIx->sr & (1 << 1)));
+
+	hspi->SPIx->dr = data;
+}
+
+uint16_t spi_slave_receive(volatile spi_config *hspi)
+{
+	while (!(hspi->SPIx->sr & (1 << 0)));
 	
-	return (uint16_t)SPI1->dr;
+	return (uint16_t)hspi->SPIx->dr;
 }
