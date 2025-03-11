@@ -5,7 +5,8 @@
 
 /* First define USER_ISR in main then include the 328p-d.h library */
 
-#ifndef USER_ISR
+#ifdef USER_ISR
+
 void __vector_1(void) __attribute__ ((signal, used)); /* Ext interrupt request 0*/
 void __vector_2(void) __attribute__ ((signal, used)); /* Ext interrupt request 1 */
 void __vector_3(void) __attribute__ ((signal, used)); /* Pin change interrupt request 0*/
@@ -31,6 +32,10 @@ void __vector_22(void) __attribute__ ((signal, used)); /* EEPROM ready */
 void __vector_23(void) __attribute__ ((signal, used)); /* Analog comparator */
 void __vector_24(void) __attribute__ ((signal, used)); /* 2-wire serial interface */
 void __vector_25(void) __attribute__ ((signal, used)); /* Store program memory ready */
+
+#else
+
+#warning "USER_ISR is NOT defined"
 
 #endif
 

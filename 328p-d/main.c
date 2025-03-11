@@ -1,6 +1,6 @@
 #include <util/delay.h>
+#define USER_ISR
 #include "328p-d.h"
-
 char *strin = "Hello\n";
 
 void test_usart(void)
@@ -43,7 +43,7 @@ write_done:
 }
 
 // Watchdog interrupt vector for WDT interrupt
-void __vector_6(void) __attribute__ ((signal, used));
+//void __vector_6(void) __attribute__ ((signal, used));
 void __vector_6(void)
 {
     // Toggle LED on pin PD7 (example LED on an ATmega328P board)

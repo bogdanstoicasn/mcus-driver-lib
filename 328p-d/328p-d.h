@@ -7,7 +7,10 @@
 #include "./include/pwm_driver.h"
 #include "./include/twi_driver.h"
 #include "./include/usart_driver.h"
-#include "./include/interrupt_driver.h"
 #include "./include/wdt_driver.h"
+
+#ifdef USER_ISR
+	#include "./include/interrupt_driver.h"
+#endif
 
 #endif
