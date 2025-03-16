@@ -7,7 +7,19 @@ char *strin = "Hello\n";
 
 void test_usart(void)
 {
-	usart_init(EVEN_PARITY, DEFAULT_STOP);
+	usart_config myusart = {
+		.f_cpu = 16000000,
+		.baudrate = 9600,
+		.baudprescaler = 0,
+		.datasize = DATA_SIZE_8BIT,
+		.interruptmode = USART_INT_DISABLED,
+		.operationmode = ASYNCH_MODE,
+		.rxtx = RXTX_ENABLE,
+		.paritymode = EVEN_MODE,
+		.stopbits = COMPLEX_STOP,
+		.edge = RISING_EDGE
+	};
+	usart_init(&myusart);
 	_delay_ms(2000);
 	
 	for (uint8_t i = 0; i < 6; i++){

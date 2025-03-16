@@ -1,48 +1,24 @@
 #include "../include/usart_driver.h"
 
-void usart_init(uint8_t parity, uint8_t stop)
+void usart_init(usart_config *config)
 {
+	config->baudprescaler = (config->f_cpu / (config->baudrate * 16UL)) - 1;
 	/* Load lower and upper bits of the baud rate */
-	UBRR0L = (uint8_t)(BAUD_PRESCALER);
-	UBRR0H = (uint8_t)(BAUD_PRESCALER >> 8);
-
-	/* Configure for transmite and receive */
-	UCSR0B |= (1 << TXEN0) | (1 << RXEN0);
-
-	/* Set size of 8 bits */
-	UCSR0C |= (1 << UCSZ00) | (1 << UCSZ01);
-
-	/* Check if it's async mode */
+	UBRR0L = (uint8_t)(config->baudprescaler);
+	UBRR0H = (uint8_t)(config->baudprescaler >> 8);
+	
+	/* Clear the operation mode then set it up */
 	UCSR0C &= ~((1 << UMSEL00) | (1 << UMSEL01));
+	UCSR0C |= (config->operationmode << UMSEL00) | (config->paritymode << UPM00) 
+			| (config->stopbits << USBS0) | config->datasize |  (config->edge << UCPOL0);
 
-	 /* Disable double speed */
+	UCSR0B |= config->interruptmode;
+
+	/* Disable double speed */
 	UCSR0A &= ~(1 << U2X0);
 
-	/* Check for parity
-	 * 2 = even parity
-	 * 3 = odd parity
-	 * deafult = no parity
-	 */
-	switch (parity) {
-	case 2:
-		UCSR0C |= (1 << UPM01);
-		break;
-	case 3:
-		UCSR0C |= (1 << UPM01) | (1 << UPM00);
-		break;
-	default:
-        UCSR0C &= ~((1 << UPM00) | (1 << UPM01));
-		break;
-	}
-
-	/* Check for stop bits */
-	//UCSR0C = (UCSR0C & ~(1 << USBS0)) | ((stop == 2) << USBS0);
-	UCSR0C &= ~(1 << USBS0);  // Clear stop bit first
-	if (stop == 2) {
-    	UCSR0C |= (1 << USBS0);  // Set for 2 stop bits
-	}
-
-	
+	/* Enable transmit or receive or both */
+	UCSR0B |= (config->rxtx << TXEN0);
 }
 
 uint8_t  usart_receive_byte(void)
