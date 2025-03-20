@@ -33,3 +33,7 @@ make main F_CPU=8000000UL TARGET=atmega328p PORT=/dev/ttyUSB0 PROGRAMMER=usbasp
 ## Lib usage
 
 Check the **.h** files for the functions name and usage.
+
+## TODO
+
+Modify adc driver and add add more pwm options.
