@@ -36,6 +36,16 @@
 #define V1_1                               14
 #define GND                                15
 
+/* Structure used to config the adc */
+typedef struct {
+	uint8_t pin: 4;
+	uint8_t prescaler: 3;
+	uint8_t interruptmode: 1;
+
+	uint8_t autotrigger_source: 3;
+	uint8_t refvoltage: 2;
+	uint8_t autotrigger: 1;
+} adc_config;
 
 /* resolution = (Vref_high - Vref_low)/2^b 
  * resolution = voltage between 2 adjacent quantization levels
