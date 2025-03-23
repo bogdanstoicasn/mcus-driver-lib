@@ -1,32 +1,23 @@
 #include "../include/adc_driver.h"
 
-void adc_init(uint8_t pin, uint8_t prescaler, uint8_t ref_voltage)
+void adc_init(adc_config *config)
 {
-	/* Power on ADC */
+	/* Power the adc */
 	PRR &= ~(1 << PRADC);
 
-	/* Start the ADC */
+	/* Set the auto trigger source if it exists */
+	ADCSRB |= (config->autotrigger_source << ADTS0);
+
+	/* Set the prescaler, interrupt if it exists and auto triggering conversion */
+	ADCSRA |= (config->prescaler << ADPS0) | (config->interruptmode << ADIE) | (config->autotrigger << ADATE);
+
+	/* Set the reference voltage and pin */
+	ADMUX |= (config->refvoltage << REFS0) | (config->pin << MUX0);
+
+	if (config->pin <= 5)
+		DIDR0 |= (1 << config->pin);
+	
 	ADCSRA |= (1 << ADEN);
-
-	/* Set the prescaler */
-	ADCSRA = (ADCSRA & ~7) | (prescaler & 7);
-
-	/* Set the reference voltage */
-	if (ref_voltage == 2 || ref_voltage > 2)
-		ref_voltage = AVCC_EXT_CAPACITOR_AREF_PIN;
-
-	ADMUX = (ADMUX & ~((1 << REFS1) | (1 << REFS0))) | (ref_voltage << REFS0);
-
-	/* 
-	 * Set the channel(pin)
-	 * Ignore reserved bits
-	 * MUX3 can be ignored sometimes because is only used for
-	 * differential inputs or internal channels
-	 */
-	if (!((pin <= 7) || pin == 0x0E || pin == 0x0F))
-		pin = 0;
-
-	ADMUX = (ADMUX & ~((1 << MUX0) | (1 << MUX1) | (1 << MUX2) | (1 << MUX3))) | (pin & 0x0F);
 }
 
 void adc_disable(void)
@@ -39,6 +30,19 @@ void adc_disable(void)
 
 	/* Shutdown the ADC from the power reduction register */
 	PRR |= (1 << PRADC);
+}
+
+void adc_reset(adc_config *config)
+{
+	ADCSRA &= ~(1 << ADEN);
+	PRR &= ~(1 << PRADC);
+
+	ADMUX = 0x00;
+	ADCSRA = 0x00;
+	ADCSRB = 0x00;
+	DIDR0 = 0x00;
+
+	*config =(adc_config){0};
 }
 
 uint16_t adc_read(void)

@@ -55,11 +55,20 @@ typedef struct {
  * 	   conversion ~= 13 cycles => sampling_rate = 125KHz/13 = 9600Hz
  * */
 
-void adc_init(uint8_t pin, uint8_t prescaler, uint8_t ref_voltage);
+void adc_init(adc_config *config);
 
-/* Function that disables the adc
+/* 
+ * Function that disables the adc
  */
 void adc_disable(void);
+
+/*
+ * Hard reset the adc 
+ * Clears the config 
+ *
+ * @param config - pointer to adc config struct
+ */
+void adc_reset(adc_config *config);
 
 /* Read the adc from a pin
  * Use adc_init first

@@ -133,7 +133,16 @@ void test_pwm()
 
 void test_adc()
 {
-	adc_init(0, PRESC_VAL_32, AVCC_EXT_CAPACITOR_AREF_PIN);
+//	adc_init(0, PRESC_VAL_32, AVCC_EXT_CAPACITOR_AREF_PIN);
+	adc_config myadc = {
+		.pin = ADC0,
+		.prescaler = PRESC_VAL_32,
+		.interruptmode = 0,
+		.autotrigger_source = 0,
+		.refvoltage = AVCC_EXT_CAPACITOR_AREF_PIN,
+		.autotrigger = 0,
+	};
+	adc_init(&myadc);
 	uint8_t counter = 0;
 	while (1) {
 		uint16_t adc_val = adc_read();

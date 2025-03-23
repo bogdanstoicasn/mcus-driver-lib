@@ -7,7 +7,7 @@ F_CPU ?= 16000000UL
 # Compiler and Flags + Utils
 CC = avr-gcc
 CFLAGS = -mmcu=$(MCU) -DF_CPU=$(F_CPU) -Wall -Wextra -Werror -Os -Iinclude \
-		 -fdata-sections -ffunction-sections -Wundef
+		 -fdata-sections -ffunction-sections -Wundef -Woverflow
 
 LDFLAGS = -mmcu=$(MCU) -Wl,--gc-sections
 
